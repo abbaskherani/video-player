@@ -1,3 +1,6 @@
+Production level Project
+
+
 .gitignore generator website
 
 .gitkeep -> files jo rakhni hai
@@ -15,3 +18,12 @@ devdependency -> sirf development me kaam aa raha to vaise install hota hai
 npm i -D nodemon
 
 -D for devdependencies
+
+
+prettier -> extension + settings 
+
+prettier intall karo, vscode me to hai lekin externally install krne se sab team members me sahi se code formatted rahega and good production code banega
+
+
+
+.prettierrc file me settings hoti hai
