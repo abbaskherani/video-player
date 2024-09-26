@@ -1,0 +1,15 @@
+how to connect db in mern with debugging
+
+
+2 ways to connect
+
+pura code index file me 
+
+db folder bana kr jo connection and phir 
+index file me import kar do
+
+2 important things to handle
+
+1. jab bhi db connect kro to 'try catch' use hi karo
+2. hamesha 'aync await' use krna hi padega
+qki database se connect krne me time lagta hai bhai
