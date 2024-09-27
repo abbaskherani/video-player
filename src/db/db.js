@@ -11,7 +11,6 @@ try {
     console.log("MONGODB connection failed", error);
     process.exit(1)
 }
-
 }
 
 export default connectDB

@@ -1,0 +1,31 @@
+JWT bcrypt and others
+
+user ke liye mongodb automatic unique id generate krta hai 
+bson data me krta hai json me nahi
+
+
+mongoose-aggregate-paginate 
+
+aggregate se hi mongoose ko hi extra power milti hai, extra features use kr sakte hai
+
+mongo aggregate pipeline, -> complex queries
+
+
+both are based on cryptography, creates tokens
+//bcrypt -> it helps you to hash your password
+
+//jwt -> 
+
+mongoose ke hooks -> middlewares
+
+
+pre and post 
+
+before saving or update data -> pre
+
+after save or update -> post 
+
+same as middleware hooks, methods bhi hai mongoose me
+custom methods bhi design kr sakte
+
+jwt is a bearer token, jiske bhi pass hai(jiske bhi pass chaabi hai) usko file de dege
