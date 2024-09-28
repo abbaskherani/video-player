@@ -1,0 +1,10 @@
+files generaly khud ke servers pr nahi rakhte hai
+mostly 3rd party apps use krte hai vrna jaise aws pr upload kr dete hai,
+
+generally made in utilities or middleware
+
+multer or express-fileupload for file management
+
+files are linked or unlinked
+
+deleted krte ho tb files unlinked kr di jaati hai so fs.unlink use kr sakte hai

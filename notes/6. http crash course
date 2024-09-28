@@ -1,0 +1,87 @@
+HTTP -> Hyper text transfer Protocol
+jo bhejege vaise hi jayega
+
+https me encrypt ho kr jata hai
+
+client server model 
+
+URL-> uniform resource locator 
+URI ->identifier
+URN -> 
+
+http headers
+-----------------
+
+metadata -> data ke baare me data
+they are in key value pair sent along with request and response
+
+headers are generally used in caching, authentication, manage state
+x-prefix (deprecated)
+
+request headers -> from client
+
+response headers -> from servers
+
+representation headers -> encoding /compression
+
+payload(data) headers -> data ex. id, email bhejna hai
+
+
+most common headers
+----------------------
+
+
+accept : application/json
+user-agent -  kaha se aai hai request, mobile,web ya kahi aur
+authorization : bearer token, 
+content-type
+cookie
+cache-control
+
+
+CORS
+-------
+
+Access - control - allow - origin
+                        -   crendentials
+                        - method
+
+HTTP Methods
+-----------
+
+basic set of operations that can be used to interact with server
+
+GET - retrieve a resource
+HEAD - no message body (response headers only)
+OPTIONS - what operations are available
+TRACE - loopback test (get same data),for debugging
+DELETE - remove a resource
+PUT - replace a resource
+POST - interact with resource (mostly add)
+PATCH  - change part of resource
+and more
+
+http status code
+------------
+
+1xx informational
+2xx success
+3xx redirection
+4xx client error
+5xx server error
+
+
+
+100 continue
+102 processing
+200 ok
+201 created
+202 accepted
+307 temporary redirect
+308 permanent redirect
+400 bad request
+401 unauthorized
+402 payment required
+404 not found
+500 internal server error
+504 gateway timeout
