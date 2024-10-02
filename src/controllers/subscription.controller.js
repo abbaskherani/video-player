@@ -6,6 +6,13 @@ import {ApiResponse} from "../utils/ApiResponse.js"
 import {asyncHandler} from "../utils/asyncHandler.js"
 
 
+/**
+ * Toggles the subscription status for a channel.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ * @param {string} req.params.channelId - The ID of the channel to toggle subscription for.
+ * @returns {Promise<void>} A promise that resolves when the subscription is toggled.
+ */
 const toggleSubscription = asyncHandler(async (req, res) => {
     const {channelId} = req.params
     // TODO: toggle subscription
