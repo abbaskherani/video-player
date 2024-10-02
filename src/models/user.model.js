@@ -68,6 +68,11 @@ userSchema.methods.isPasswordCorrect = async function(password) {
    await bcrypt.compare(password, this.password) //compare returns true or false
 }
 
+/**
+ * Generates an access token for the user
+ * @param {void} - This method doesn't take any parameters
+ * @returns {string} A JWT access token containing user information
+ */
 userSchema.methods.generateAccessToken = function(){
     return jwt.sign({
         _id: this._id,
@@ -76,6 +81,13 @@ userSchema.methods.generateAccessToken = function(){
         fullName : this.fullName
     },
     process.env.ACCESS_TOKEN_SECRET,
+    ```
+    /**
+     * Generates a refresh token for the user
+     * @param {void} - This method doesn't take any parameters
+     * @returns {string} A JWT refresh token containing the user's ID
+     */
+    ```
     {
         expiresIn : process.env.ACCESS_TOKEN_EXPIRY
     }  

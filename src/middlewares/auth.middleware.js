@@ -3,6 +3,13 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken"
 import { User } from "../models/user.model.js";
 
+/**
+ * Middleware function to verify JWT token and authenticate user
+ * @param {Object} req - Express request object
+ * @param {Object} _ - Express response object (unused)
+ * @param {Function} next - Express next middleware function
+ * @returns {void} Calls next middleware or throws ApiError if authentication fails
+ */
 export const verifyJWT = asyncHandler(async(req, _, next) => {
     try {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")

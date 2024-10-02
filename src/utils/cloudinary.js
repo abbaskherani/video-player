@@ -2,6 +2,11 @@ import { v2 as cloudinary } from 'cloudinary';
 import { response } from 'express';
 import fs from 'fs'
 
+/**
+ * Uploads a file to Cloudinary
+ * @param {string} localFilePath - The local path of the file to be uploaded
+ * @returns {Object|null} The response from Cloudinary containing upload details, or null if upload fails
+ */
 (async function() {
 
     // Configuration
@@ -12,6 +17,11 @@ import fs from 'fs'
     })
 
 
+    /**
+     * Uploads a file to Cloudinary
+     * @param {string} localFilePath - The path to the local file to be uploaded
+     * @returns {Object|null} The Cloudinary upload response object if successful, or null if upload fails
+     */
     const  uploadOnCloudinary = async (localFilePath) =>{
         try {
             if(!localFilePath) return null
