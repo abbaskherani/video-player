@@ -7,6 +7,11 @@ import jwt from "jsonwebtoken"
 import mongoose from "mongoose";
 
 
+/**
+ * Generates access and refresh tokens for a user
+ * @param {string} userId - The ID of the user for whom to generate tokens
+ * @returns {Object} An object containing the generated access token and refresh token
+ */
 const generateAccessAndRefereshTokens = async(userId) =>{
     try {
         const user = await User.findById(userId)
@@ -19,6 +24,19 @@ const generateAccessAndRefereshTokens = async(userId) =>{
         return {accessToken, refreshToken}
 
 
+    /**
+     * Registers a new user with the provided details.
+     * @param {Object} req - Express request object containing user registration data.
+     * @param {string} req.body.fullName - Full name of the user.
+     * @param {string} req.body.email - Email address of the user.
+     * @param {string} req.body.username - Username for the user.
+     * @param {string} req.body.password - Password for the user account.
+     * @param {Object} req.files - Object containing uploaded files.
+     * @param {Object[]} req.files.avatar - Array containing avatar file information.
+     * @param {Object[]} [req.files.coverImage] - Optional array containing cover image file information.
+     * @param {Object} res - Express response object.
+     * @returns {Promise<void>} Sends a JSON response with the created user data or throws an error.
+     */
     } catch (error) {
         throw new ApiError(500, "Something went wrong while generating referesh and access token")
     }
@@ -35,6 +53,14 @@ const registerUser = asyncHandler( async (req, res) => {
     // check for user creation
     // return res
 
+/**
+ * Checks if any of the given user registration fields are empty or contain only whitespace
+ * @param {string} fullName - The full name of the user
+ * @param {string} email - The email address of the user
+ * @param {string} username - The chosen username for the user
+ * @param {string} password - The password for the user account
+ * @returns {boolean} True if any field is empty or contains only whitespace, false otherwise
+ */
 
     const {fullName, email, username, password } = req.body
     //console.log("email: ", email);
@@ -98,6 +124,12 @@ const registerUser = asyncHandler( async (req, res) => {
 
 } )
 
+/**
+ * Handles user login authentication and token generation.
+ * @param {Object} req - Express request object containing user credentials in the body.
+ * @param {Object} res - Express response object for sending the authentication result.
+ * @returns {Promise<void>} Sends a JSON response with user data and tokens on successful login.
+ */
 const loginUser = asyncHandler(async (req, res) =>{
     // req body -> data
     // username or email
@@ -158,6 +190,12 @@ const loginUser = asyncHandler(async (req, res) =>{
 
 })
 
+/**
+ * Logs out a user by removing their refresh token from the database and clearing cookies.
+ * @param {Object} req - The request object containing user information.
+ * @param {Object} res - The response object used to send the API response.
+ * @returns {Object} JSON response indicating successful logout.
+ */
 const logoutUser = asyncHandler(async(req, res) => {
     await User.findByIdAndUpdate(
         req.user._id,
@@ -183,6 +221,12 @@ const logoutUser = asyncHandler(async(req, res) => {
     .json(new ApiResponse(200, {}, "User logged Out"))
 })
 
+/**
+ * Refreshes the access token using a refresh token.
+ * @param {Object} req - The request object containing the refresh token in cookies or body.
+ * @param {Object} res - The response object to send the refreshed tokens.
+ * @returns {Object} JSON response with new access and refresh tokens.
+ */
 const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
@@ -225,6 +269,14 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
                 "Access token refreshed"
             )
         )
+    /**
+     * Changes the current password for a user
+     * @param {Object} req - The request object containing user information and new password details
+     * @param {Object} res - The response object to send the result
+     * @param {string} req.body.oldPassword - The user's current password
+     * @param {string} req.body.newPassword - The new password to set
+     * @returns {Object} JSON response indicating success or failure
+     */
     } catch (error) {
         throw new ApiError(401, error?.message || "Invalid refresh token")
     }
@@ -252,10 +304,28 @@ const changeCurrentPassword = asyncHandler(async(req, res) => {
 })
 
 
+/**
+ * Retrieves the current authenticated user
+ * @param {Object} req - Express request object containing user information
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response with user data and success message
+ */
 const getCurrentUser = asyncHandler(async(req, res) => {
     return res
     .status(200)
     .json(new ApiResponse(
+        /**
+         * Updates the account details of the authenticated user
+         * @param {Object} req - The request object
+         * @param {Object} req.body - The request body
+         * @param {string} req.body.fullName - The new full name of the user
+         * @param {string} req.body.email - The new email of the user
+         * @param {Object} req.user - The authenticated user object
+         * @param {string} req.user._id - The ID of the authenticated user
+         * @param {Object} res - The response object
+         * @returns {Object} ApiResponse object with updated user details and success message
+         * @throws {ApiError} If fullName or email is missing
+         */
         200,
         req.user,
         "User fetched successfully"
@@ -286,6 +356,12 @@ const updateAccountDetails = asyncHandler(async(req, res) => {
     .json(new ApiResponse(200, user, "Account details updated successfully"))
 });
 
+/**
+ * Updates the user's avatar image
+ * @param {Object} req - Express request object containing the file and user information
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response with updated user information and success message
+ */
 const updateUserAvatar = asyncHandler(async(req, res) => {
     const avatarLocalPath = req.file?.path
 
@@ -319,6 +395,12 @@ const updateUserAvatar = asyncHandler(async(req, res) => {
     )
 })
 
+/**
+ * Updates the user's cover image
+ * @param {Object} req - Express request object containing the file and user information
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response with updated user data and success message
+ */
 const updateUserCoverImage = asyncHandler(async(req, res) => {
     const coverImageLocalPath = req.file?.path
 
@@ -342,6 +424,12 @@ const updateUserCoverImage = asyncHandler(async(req, res) => {
             $set:{
                 coverImage: coverImage.url
             }
+        /**
+         * Retrieves the channel profile for a given user.
+         * @param {Object} req - The request object containing the username parameter.
+         * @param {Object} res - The response object to send the channel profile.
+         * @returns {Promise<void>} Sends a JSON response with the user's channel profile or throws an ApiError.
+         */
         },
         {new: true}
     ).select("-password")
@@ -426,6 +514,12 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
     )
 })
 
+/**
+ * Retrieves the watch history for the authenticated user.
+ * @param {Object} req - Express request object containing user information.
+ * @param {Object} res - Express response object.
+ * @returns {Promise<Object>} A promise that resolves to the API response containing the user's watch history.
+ */
 const getWatchHistory = asyncHandler(async(req, res) => {
     const user = await User.aggregate([
         {
